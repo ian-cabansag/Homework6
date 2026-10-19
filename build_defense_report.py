@@ -61,16 +61,20 @@ def build_results() -> dict[str, Any]:
     key = read_json(ROOT / "data" / "practice_key.json")
     prices = read_json(ROOT / "data" / "prices.json")[MODEL]
     filenames = sorted(p.name for p in (ROOT / "data" / "practice_docs").iterdir() if p.is_file())
+    practice_names = set(filenames)
+    practice_paths = {f"data/practice_docs/{name}" for name in filenames}
     if len(filenames) != 12 or len(key) != 12:
         raise ValueError("Problem 6 requires all 12 supplied documents and answer-key rows.")
 
     p6_audits = [
         (idx, row) for idx, row in enumerate(audit_rows, 1)
         if row.get("problem") == 6 and row.get("mode") == "defended"
+        and str(row.get("document", "")).replace("\\", "/").lstrip("./") in practice_paths
     ]
     p6_usages = [
         (idx, row) for idx, row in enumerate(usage_rows, 1)
         if row.get("problem") == 6 and row.get("mode") == "defended"
+        and str(row.get("document", "")).replace("\\", "/").lstrip("./") in practice_paths
     ]
     if len(p6_audits) != 12 or len(p6_usages) != 12:
         raise ValueError(f"Expected exactly 12 defended audit and usage rows, got {len(p6_audits)} and {len(p6_usages)}")
@@ -189,6 +193,7 @@ def build_results() -> dict[str, Any]:
     requests = Counter(
         Path(row["document"]).name for row in security_rows
         if row.get("problem") == 6 and row.get("mode") == "defended"
+        and Path(row["document"]).name in practice_names
     )
     baseline_hits = p5["extraction_accuracy"]
     baseline_decisions = p5["decision_accuracy"]

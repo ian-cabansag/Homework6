@@ -226,6 +226,8 @@ async def run_setup(
     cached = setup == "CACHED"
     cache_key = f"hw6-p4-{study_id}-cached" if cached else None
     client = AsyncOpenAI(
+        # Non-secret SDK placeholder; Portkey authentication is supplied only
+        # in x-portkey-api-key from the environment variable above.
         api_key="portkey-gateway-client",
         base_url=PORTKEY_BASE_URL,
         default_headers={"x-portkey-api-key": portkey_key},
@@ -345,10 +347,10 @@ async def main() -> int:
     parser.add_argument("--experiment-id", help="Reuse a study ID when rerunning a failed arm.")
     args = parser.parse_args()
 
-    load_dotenv(PROJECT_ROOT.parent / ".env")
+    load_dotenv(PROJECT_ROOT / ".env")
     portkey_key = os.getenv("PORTKEY_API_KEY")
     if not portkey_key:
-        print("ERROR: PORTKEY_API_KEY is not set in the environment or workspace-root .env.", file=sys.stderr)
+        print("ERROR: PORTKEY_API_KEY is not set in the environment or project-root .env.", file=sys.stderr)
         return 2
 
     data_dir = PROJECT_ROOT / "data" / "practice_docs"

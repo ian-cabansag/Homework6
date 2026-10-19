@@ -133,10 +133,10 @@ def _display(result: Any, usage: dict[str, Any], doc_path: Path) -> None:
 
 
 async def run_document(doc_path: Path) -> int:
-    load_dotenv(PROJECT_ROOT.parent / ".env")
+    load_dotenv(PROJECT_ROOT / ".env")
     portkey_api_key = os.getenv("PORTKEY_API_KEY")
     if not portkey_api_key:
-        print("ERROR: PORTKEY_API_KEY is not set in the environment or workspace-root .env.", file=sys.stderr)
+        print("ERROR: PORTKEY_API_KEY is not set in the environment or project-root .env.", file=sys.stderr)
         return 2
 
     if not doc_path.is_file():
@@ -155,6 +155,8 @@ async def run_document(doc_path: Path) -> int:
         return 2
 
     client = AsyncOpenAI(
+        # Non-secret SDK placeholder; Portkey authentication is supplied only
+        # in x-portkey-api-key from the environment variable above.
         api_key="portkey-gateway-client",
         base_url=PORTKEY_BASE_URL,
         default_headers={"x-portkey-api-key": portkey_api_key},

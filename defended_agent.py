@@ -188,10 +188,10 @@ def _failure_record(path: Path, stage: str, error_type: str, error_text: str) ->
 
 
 async def run_defended_document(doc_path: Path) -> int:
-    load_dotenv(PROJECT_ROOT.parent / ".env")
+    load_dotenv(PROJECT_ROOT / ".env")
     portkey_key = os.getenv("PORTKEY_API_KEY")
     if not portkey_key:
-        print("ERROR: PORTKEY_API_KEY is not set in the environment or workspace-root .env.", file=sys.stderr)
+        print("ERROR: PORTKEY_API_KEY is not set in the environment or project-root .env.", file=sys.stderr)
         return 2
     try:
         # Keep defended mode confined to local coursework data while allowing
@@ -214,6 +214,8 @@ async def run_defended_document(doc_path: Path) -> int:
         _append_json_array(OUTPUT_DIR / "security_log.json", security)
 
     client = AsyncOpenAI(
+        # Non-secret SDK placeholder; Portkey authentication is supplied only
+        # in x-portkey-api-key from the environment variable above.
         api_key="portkey-gateway-client",
         base_url=PORTKEY_BASE_URL,
         default_headers={"x-portkey-api-key": portkey_key},

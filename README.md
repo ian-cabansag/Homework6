@@ -20,6 +20,8 @@ Supporting experiment/report builders and local tests are included. `output/` co
 Python 3.11 or newer is recommended. Install the pinned dependencies:
 
 ```powershell
+git clone https://github.com/ian-cabansag/Homework6.git
+Set-Location Homework6
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
@@ -53,6 +55,20 @@ Accepted formats are `.html`, `.pdf`, and `.eml`. Baseline mode intentionally re
 
 These commands make real API calls and append new records. Set up the environment first; never edit measurements by hand.
 
+The committed `output/` contains the completed evidence. Do not rerun experiments in this submission checkout: its logs are retained, and result builders intentionally fail closed on ambiguous duplicate runs. For a new run, make a separate clone/working copy, configure its `.env`, and initialize only that copy's mutable run logs (`audit_trail.json`, `usage_log.json`, `trap_calls.json`, `security_log.json`, and `cache_test.json`) to `[]`:
+
+```powershell
+git clone https://github.com/ian-cabansag/Homework6.git ..\Homework6-repro
+Set-Location ..\Homework6-repro
+'[]' | Set-Content -Encoding ascii output\audit_trail.json
+'[]' | Set-Content -Encoding ascii output\usage_log.json
+'[]' | Set-Content -Encoding ascii output\trap_calls.json
+'[]' | Set-Content -Encoding ascii output\security_log.json
+'[]' | Set-Content -Encoding ascii output\cache_test.json
+```
+
+Keep the submitted checkout and its evidence untouched. The Problem 5 builder accepts explicit `--start`/`--end` UTC bounds; use the actual run timestamps from the new audit log.
+
 ### Prompt-cache experiment (Problem 4)
 
 ```powershell
@@ -72,6 +88,8 @@ Get-ChildItem data/practice_docs -File | ForEach-Object { python agent.py --doc 
 ```
 
 The submitted field-by-field comparisons are in `output/attack_results.json` and `output/defense_results.json`; local deterministic defense tests run with `python -m unittest discover -s tests -v`.
+
+In the separate experiment copy, build the scored reports from those actual runs with `python build_attack_report.py --start <first-UTC-timestamp> --end <last-UTC-timestamp>` and `python build_defense_report.py`. Each builder validates that it found one unambiguous run for every practice document.
 
 ### Original red-team tests (Problem 7)
 

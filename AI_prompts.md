@@ -490,8 +490,95 @@ Each section records only prompts actually submitted for that problem. Problem t
 - Follow-up prompts: None submitted.
 - Correction needed after first attempt: No follow-up prompt was submitted.
 
-## Problem 10 — Title not provided
+## Problem 10 — Public GitHub Submission
 
-- Initial prompt: Not yet submitted.
-- Follow-up prompts: None submitted.
-- Correction needed after first attempt: Not applicable; no problem prompt has been submitted.
+- Initial prompt:
+
+  > For Problem 10, prepare HW6 for submission as a public GitHub repository.
+  >
+  > Our final repository must contain the full working code, the supplied course data, the two original attack files, and every required output.
+  >
+  > The final GitHub repository should use HW6/hw6 as the project root.
+  >
+  > FIRST: AUDIT THE FILE STRUCTURE.
+  >
+  > Required root files:
+  > - AI_prompts.md
+  > - README.md
+  > - .gitignore
+  > - .env.example
+  > - requirements.txt
+  > - agent.py
+  > - tools.py
+  > - models.py
+  >
+  > Required directories:
+  > - prompts/ containing prompt.md
+  > - data/ containing shop_handbook.md, prices.json, practice_key.json, all 12 practice documents, all 10 exam documents, and the two files in my_attacks/
+  > - output/ containing every required evidence file
+  >
+  > Required output files:
+  > - handbook_estimate.md
+  > - harness.md
+  > - usage_log.json
+  > - audit_trail.json
+  > - trap_calls.json
+  > - cache_test.json
+  > - cache_test.md
+  > - attack_results.json
+  > - attack_results.md
+  > - defense_results.json
+  > - defense_results.md
+  > - red_team.md
+  > - exam_results.json
+  > - hw6_report.html
+  >
+  > CRITICAL:
+  > Unlike HW4, the complete course data folder IS REQUIRED in this HW6 GitHub submission.
+  >
+  > Never commit:
+  > - The real .env file
+  > - Actual API keys or credentials
+  > - Virtual environments
+  > - Python cache directories
+  > - Other genuine secrets
+  >
+  > Include .env.example with safe placeholders for the API key and required model/API configuration.
+  >
+  > Create a polished, useful README.md explaining:
+  > - What the Vendor Desk does
+  > - Core architecture
+  > - Requirements and installation
+  > - How to configure the environment
+  > - How to run the agent on a document
+  > - How to reproduce the cache experiment
+  > - How to reproduce attack and defense tests
+  > - How to run the exam evaluation
+  > - How to open the standalone report
+  > - How logging works
+  > - Security controls and limitations
+  >
+  > Run code checks and validate all required output files before submission.
+  >
+  > Verify:
+  > 1. Only gpt-6-luna is used for model calls.
+  > 2. All required JSON parses correctly.
+  > 3. Output counts match the required experiments.
+  > 4. Calculated costs reconcile with API usage and prices.json.
+  > 5. Every required course file is included.
+  > 6. The report works offline.
+  > 7. The real .env is excluded.
+  > 8. No secrets are present in files or Git history.
+  > 9. The repository can be cloned and set up using the README instructions.
+  >
+  > Do not fabricate missing outputs. If a required experiment has not been executed, identify it as incomplete.
+  >
+  > After verification, prepare and push the repository to GitHub using my authenticated access. If I need to create or authorize the repository, ask me. This is the repo [https://github.com/ian-cabansag/Homework6](https://github.com/ian-cabansag/Homework6)
+  >
+  > Return the real public GitHub URL once the push succeeds. Do not invent a URL or claim publication before it is confirmed.
+  >
+  > Finally, make sure the GitHub URL is the one I can submit to Canvas.
+  > T
+
+- Follow-up prompts: None submitted for Problem 10.
+- Correction needed after first attempt: Not applicable; no Problem 10 follow-up was submitted.

@@ -1,0 +1,6 @@
+pydantic-ai==2.45.0
+openai==3.16.1
+pydantic==2.13.5
+beautifulsoup4==4.15.0
+pypdf==6.16.2
+python-dotenv==1.2.3

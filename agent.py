@@ -196,6 +196,40 @@ async def run_document(doc_path: Path) -> int:
         return 0
     except Exception as exc:
         message = str(exc).replace(portkey_api_key, "[redacted]")
+        failed_at = datetime.now(timezone.utc).isoformat()
+        failure = {
+            "timestamp_utc": failed_at,
+            "problem": 3,
+            "mode": "baseline",
+            "document": str(doc_path),
+            "model": MODEL_NAME,
+            "api": "Portkey OpenAI-compatible Responses API",
+            "success": False,
+            "usage_source": "no API-reported usage available",
+            "input_tokens": None,
+            "uncached_input_tokens": None,
+            "cache_read_tokens": None,
+            "cache_write_tokens": None,
+            "output_tokens": None,
+            "cost_usd": None,
+            "error": f"{type(exc).__name__}: {message}",
+        }
+        audit_failure = {
+            "timestamp_utc": failed_at,
+            "problem": 3,
+            "mode": "baseline",
+            "document": str(doc_path),
+            "model": MODEL_NAME,
+            "success": False,
+            "error": failure["error"],
+            "tool_calls_and_results": [],
+            "final_answer": None,
+        }
+        try:
+            append_json_array(OUTPUT_DIR / "usage_log.json", failure)
+            append_json_array(OUTPUT_DIR / "audit_trail.json", audit_failure)
+        except Exception as log_exc:
+            message += f"; failed to append failure evidence ({type(log_exc).__name__})"
         print(f"ERROR: API run failed: {type(exc).__name__}: {message}", file=sys.stderr)
         return 1
     finally:

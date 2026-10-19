@@ -115,7 +115,7 @@ The exam has no answer key. Its submitted records are observations, not verified
 
 ## Logs and cost accounting
 
-`output/usage_log.json` and `output/audit_trail.json` preserve run usage, calculated USD cost, calls, and results. `output/trap_calls.json` records only attempted trap invocations; these tools are local logging stubs. Defensive blocks are also recorded in `output/security_log.json`. Existing evidence includes failed API attempts as errors where recorded; those are not successful measurements. Cost is computed—not a provider invoice—from API-reported token buckets and the rates in `data/prices.json`, distinguishing ordinary input, cached reads, cache writes, and output where available.
+`output/usage_log.json` and `output/audit_trail.json` preserve run usage, calculated USD cost, calls, and results. Failed baseline/defended attempts are recorded with `success: false` and null usage/cost when the API returns no usage; they are not successful measurements. `output/trap_calls.json` records only attempted trap invocations; these tools are local logging stubs. Defensive blocks are also recorded in `output/security_log.json`. Cost is computed—not a provider invoice—from API-reported token buckets and the rates in `data/prices.json`, distinguishing ordinary input, cached reads, cache writes, and output where available.
 
 ## Security controls and limitations
 
